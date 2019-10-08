@@ -1,0 +1,133 @@
+{-# STDLIB_VERSION 3 #-}
+{-# CONTENT_TYPE DAPP #-}
+{-# SCRIPT_TYPE ACCOUNT #-}
+#the event probability is equal
+let q1start =  190 #two number after digit
+let q2start = 190 #two number after digit
+let vig = 52 #two number after digit
+let s = 10 #sum in waves which we can lost
+
+#возвращает коэффициент,если событие сделано на это событие домноженный на 10
+func coef(q: Int,dif:Int) = {
+    let coef = (q*(-47*dif*dif+10000))/10000
+    coef
+}
+
+#возвращает другой коэффициент, домноженный на 10
+func anothercoef(q: Int,dif: Int) ={
+    let actualvig =  (vig* (-95 * dif * dif+ 1877 * dif + 10000))/10000
+    let anothercoef =  pow(actualvig+1000-100000/q,0,-1,0,5,DOWN)
+    if (anothercoef > 270) then (270)
+    else(anothercoef)
+}
+
+@Callable(contextObj)
+func bet(event: Int) ={
+    let payment = match(contextObj.payment) {
+        case p:AttachedPayment => if ( p.amount < 100000000) then (throw("low payment")) else p
+        case _ => throw("Payment not attached")
+    }
+
+    let n = getIntegerValue(this,"n") #amount bets on the first event
+    let m = getIntegerValue(this,"m") #amount bets on the second event
+    let count = getIntegerValue(this,"count") #amount bets on the second event
+    let difold = n-m
+
+    let event1amount = match(getInteger(this,toString(contextObj.caller) + "_event1amount")){
+        case u:Unit =>  0
+        case i:Int => i
+    }
+
+    let event2amount = match(getInteger(this,toString(contextObj.caller) + "_event2amount")){
+        case u:Unit => 0
+        case i:Int => i
+    }
+
+    let dif = if(event == 1) then(difold+1) else(difold-1)
+    let q1 = if(dif>=0) then(coef(q1start,dif)) else(anothercoef(coef(q2start,dif),dif))
+    let q2 = if(dif>=0) then(anothercoef(q1,dif)) else(coef(q2start,dif))
+    let q1next = if(dif+1>=0) then(coef(q1start,dif+1)) else(anothercoef(coef(q2start,dif+1),dif+1))
+    let q2next  = if(dif-1>=0) then(anothercoef(q1,dif-1)) else(anothercoef(coef(q2start,dif-1),dif-1))
+    let countNew = count + 1  
+        if (event == 1) then(
+        if (q1 < 100) then throw("to low coef q1 = " + toString(q1))
+        else(
+            let nNew = n + 1
+            WriteSet([
+            DataEntry(toString(contextObj.caller) + "_event1amount",event1amount+q1),
+            DataEntry(toString(countNew)+"_event",event),
+            DataEntry(toString(countNew)+"_qoef1", q1),
+            DataEntry(toString(countNew)+"_qoef2", q2),
+            DataEntry(toString(countNew)+"_bettor", toString(contextObj.caller)),
+            DataEntry("q1_next", q1next),
+            DataEntry("q2_next", q2next),
+            DataEntry("n", nNew),
+            DataEntry("count", countNew)])
+        )
+    ) 
+    else{
+        if (q2 < 100)  then throw("to low coef q2 = " +toString(q2)) 
+        else(
+            let mNew = m + 1
+            WriteSet([
+            DataEntry(toString(contextObj.caller) + "_event2amount",event2amount+q2),
+            DataEntry(toString(countNew)+"_event",event),
+            DataEntry(toString(countNew)+"_qoef2", q2),
+            DataEntry(toString(countNew)+"_bettor", toString(contextObj.caller)),
+            DataEntry("q1_next", q1next),
+            DataEntry("q2_next", q2next),
+            DataEntry(toString(countNew)+"_qoef1", coef(q1start,n-m)),
+            DataEntry("m", mNew),
+            DataEntry("count", countNew)
+            ])
+        )        
+    }
+    }
+
+@Callable(contextObj)
+func withdraw() =   {
+
+    let event1amount = match(getInteger(this,toString(contextObj.caller) + "_event1amount")){
+        case u:Unit => 0
+        case i:Int => i
+    }
+
+    let event2amount = match(getInteger(this,toString(contextObj.caller) + "_event2amount")){
+        case u:Unit => 0
+        case i:Int => i
+    }
+    
+    let event1 = match(getBoolean(this,"result_event_1")){
+        case u:Unit => false
+        case b:Boolean=> b
+    }
+
+    let event2 = match(getBoolean(this,"result_event_2")){
+        case u:Unit => false
+        case b:Boolean=>b
+    }
+
+
+    if (event1)
+     then (
+         ScriptResult(
+                WriteSet([DataEntry(toString(contextObj.caller) + "_event1amount", 0)]),
+                TransferSet([ScriptTransfer(contextObj.caller,event1amount*1000000, unit)])
+                )
+     )
+    else( 
+        if (event2) then (
+        ScriptResult(
+               WriteSet([DataEntry(toString(contextObj.caller) + "_event2amount", 0)]),
+               TransferSet([ScriptTransfer(contextObj.caller,event2amount*1000000, unit)])
+               )
+    )
+    else throw("event did not happen or you have zero win")
+    )
+}
+
+    
+
+#
+#@Verifier(contextObj)
+#func verify() = true #false
