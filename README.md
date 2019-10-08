@@ -1,6 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 ## dApp Info
 DappAddress - 3N3AeA5FWm7EHheHoik8BBEA3GXXJosnVY8
+
 Invoke script - bet(event: Int)
 
 ## Available Scripts
