@@ -1,0 +1,26 @@
+bet(event: Int)
+Принимает на вход один аргумент - событие _event_ (1 или 2). 
+_seedById_ <- извлеёчённый сид по ключу айди телеграмм аккаунта
+
+tx = invokeScript({
+        dApp:exchagerAddres,
+        call:{
+            function:"bet",
+            args:[ { type:"integer", value: _event_ }],
+            fee:1000000,
+            payment: [{'amount': 100000000, 'assetId': 'WAVES'}]
+        },_seedById_ )
+
+________
+
+withdraw()
+Вызывается после события. Вывод средств, принадлежащий пользователю
+
+tx = invokeScript({
+        dApp:exchagerAddres,
+        call:{
+            function:"withdraw",
+            args:[],
+            fee:1000000,
+            payment: []
+        },_seedById_ )
