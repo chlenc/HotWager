@@ -31,7 +31,7 @@ class LoginBtn extends React.Component<IProps> {
     componentDidMount() {
         const {
             botName,
-            buttonSize = 'large',
+            buttonSize = 'medium',
             cornerRadius,
             requestAccess = 'write',
             usePic = false,
