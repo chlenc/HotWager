@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/hotwager/static/css/main.f031cce0.chunk.css",
+    "main.js": "/hotwager/static/js/main.cd36ac55.chunk.js",
+    "main.js.map": "/hotwager/static/js/main.cd36ac55.chunk.js.map",
+    "runtime-main.js": "/hotwager/static/js/runtime-main.30367398.js",
+    "runtime-main.js.map": "/hotwager/static/js/runtime-main.30367398.js.map",
+    "static/js/2.9e074764.chunk.js": "/hotwager/static/js/2.9e074764.chunk.js",
+    "static/js/2.9e074764.chunk.js.map": "/hotwager/static/js/2.9e074764.chunk.js.map",
+    "index.html": "/hotwager/index.html",
+    "precache-manifest.6115374b47048c0b529360337ee57b0a.js": "/hotwager/precache-manifest.6115374b47048c0b529360337ee57b0a.js",
+    "service-worker.js": "/hotwager/service-worker.js",
+    "static/css/main.f031cce0.chunk.css.map": "/hotwager/static/css/main.f031cce0.chunk.css.map"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.30367398.js",
+    "static/js/2.9e074764.chunk.js",
+    "static/css/main.f031cce0.chunk.css",
+    "static/js/main.cd36ac55.chunk.js"
+  ]
+}
