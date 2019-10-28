@@ -6,8 +6,11 @@ export interface IUser {
     id: number
     first_name?: string
     last_name?: string
+    balance?: number
     photo_url?: string
     username?: string
+    seed?: string
+    address?: string
 }
 
 interface IProps {
