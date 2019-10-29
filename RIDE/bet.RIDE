@@ -4,7 +4,7 @@
 #the event probability is equal
 let q1start =  190 #two number after digit
 let q2start = 190 #two number after digit
-let vig = 52 #two number after digit
+let vig = 52 #two  
 let s = 10 #sum in waves which we can lost
 
 #возвращает коэффициент,если событие сделано на это событие домноженный на 10
@@ -45,9 +45,9 @@ func bet(event: Int) ={
 
     let dif = if(event == 1) then(difold+1) else(difold-1)
     let q1 = if(dif>=0) then(coef(q1start,dif)) else(anothercoef(coef(q2start,dif),dif))
-    let q2 = if(dif>=0) then(anothercoef(q1,dif)) else(coef(q2start,dif))
+    let q2 = if(dif>=0) then(anothercoef(coef(q1start,dif),dif)) else(coef(q2start,dif))
     let q1next = if(dif+1>=0) then(coef(q1start,dif+1)) else(anothercoef(coef(q2start,dif+1),dif+1))
-    let q2next  = if(dif-1>=0) then(anothercoef(q1,dif-1)) else(anothercoef(coef(q2start,dif-1),dif-1))
+    let q2next  = if(dif-1>=0) then(anothercoef(coef(q1start,dif-1),dif-1)) else(coef(q2start,dif-1))
     let countNew = count + 1  
         if (event == 1) then(
         if (q1 < 100) then throw("to low coef q1 = " + toString(q1))

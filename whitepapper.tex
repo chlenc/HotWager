@@ -1,0 +1,40 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+
+\usepackage{natbib}
+\usepackage{graphicx}
+
+\begin{document}
+\maketitle
+
+\begin{itemize}
+    \item $\pi$ $\--$ доход букмекера 
+    \item $n$ $\--$ количество ставок на событие $I$
+    \item $m$ $\--$ количество ставок на событие $II$
+    \item $x_I$ $\--$ вектор ставок на первое событие
+    \item $x_{II}$ $\--$ вектор ставок на второе событие
+    \item $q_I$ $\--$ коэффициенты ставок на событие I
+    \item $q_{II}$ $\--$ коэффициенты ставок на событие II
+    \item $q_{II}$ $\--$ коэффициенты ставок на событие II
+    \end{itemize}
+    В случае события $I$:
+    \[
+        \pi = \sum_{i=1}^n x_I(i) + \sum_{j=1}^m x_{II}(j) -   \sum_{i=1}^n x_I(i)q_I(i)
+    \]
+    В случае события $II$:
+    \[
+        \pi = \sum_{i=1}^n x_I(i) + \sum_{j=1}^m x_{II}(j) -   \sum_{i=1}^n x_{II}(i)q_{II}(i)
+    \]
+    Где элементы векторов $q_I$ и $q_{II}$ определяются $n$ и $m$:
+   
+    \[
+        q_I = q_I(m,n)  
+    \]
+        \[
+        q_{II}= q_{II}(m,n)  
+    \]
+
+
+
+\end{document}
