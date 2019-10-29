@@ -3,6 +3,8 @@ import SubStore from './SubStore';
 import { action, autorun, observable } from "mobx";
 import axios from "axios";
 import { dApp, nodeUrl } from "../constants";
+import { IInvokeScriptParams } from "@waves/waves-transactions/src/transactions";
+import { broadcast, invokeScript } from "@waves/waves-transactions";
 
 export type TStoryItem = { e: number, k1: number, k2: number, i: number }
 
@@ -13,6 +15,7 @@ export class DappStore extends SubStore {
     @observable count1: number | null = null;
     @observable count2: number | null = null;
     @observable story: TStoryItem[] | null = null;
+    @observable load: boolean = false;
 
     constructor(rootStore: RootStore) {
         super(rootStore);
@@ -49,6 +52,34 @@ export class DappStore extends SubStore {
                 i: +i,
             }))
     }
+
+
+    chooseEvent = async (value: number, seed: string) => {
+        this.load = true;
+        const params: IInvokeScriptParams = {
+            dApp,
+            feeAssetId: null,
+            call: {function: 'bet', args: [{type: 'integer', value}]},
+            payment: [{assetId: null, amount: 1e8}],
+            chainId: 'T'
+        };
+        const tx = invokeScript(params, seed);
+        await broadcast(tx, nodeUrl).then(d => console.log(d.id)).catch(e => alert(e)).then(() => this.load = false)
+    }
+
+
+    withdraw = async (seed: string) => {
+        const params: IInvokeScriptParams = {
+            dApp,
+            feeAssetId: null,
+            call: {function: 'withdraw', args: []},
+            payment: [],
+            chainId: 'T'
+        };
+        const tx = invokeScript(params, seed);
+        broadcast(tx, nodeUrl).then(d => console.log(d.id)).catch(e => alert(e)).then(() => this.load = false)
+    }
+
 
 }
 
