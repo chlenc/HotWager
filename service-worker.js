@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/hotwager/precache-manifest.65c9debbbf206dadfa741159b08d9c2e.js"
+  "/hotwager/precache-manifest.ca9c843202e3efeaae410d7ae97207a4.js"
 );
 
 self.addEventListener('message', (event) => {
