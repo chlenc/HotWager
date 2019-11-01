@@ -5,3 +5,4 @@ to start app with telegram login:
  - set `HOST = my-app.dev` and `PORT=80` in .env file
  - run app with `sudo`: `sudo npm start`
  - enjoy
+.
