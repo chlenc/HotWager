@@ -2,15 +2,17 @@
 import React from 'react';
 import styled from "@emotion/styled";
 import {css, jsx} from "@emotion/core";
-import {IUser} from "../LoginBtn";
-import Button from "./Button";
+import LoginBtn, {IUser} from "../LoginBtn";
+import Button from "../Button";
 import copyToClipboard from 'copy-to-clipboard'
 import {inject, observer} from "mobx-react";
-import {NotificationsStore} from "../../stores";
+import {AccountsStore, NotificationsStore} from "../../stores";
+import Dialog from "../Dialog";
 
 interface IProps {
     user: IUser | null
     notificationsStore?: NotificationsStore;
+    accountsStore?: AccountsStore;
 }
 
 
@@ -18,7 +20,7 @@ const Root = styled.div`
 display: flex;
 align-items: center;
 justify-content: space-between;
-padding: 20px 60px;
+width: 100%;
 `;
 
 const UserCardBody = styled.div`
@@ -26,6 +28,7 @@ display: flex;
 align-items: center;
 justify-content: space-between;
 user-select: none;
+margin-right: 15px;
 `;
 
 const Avatar = styled.img`
@@ -49,7 +52,7 @@ const TextSceleton = styled.div`
   background-color: darkgray;
 `
 
-@inject('notificationsStore')
+@inject('notificationsStore', 'accountsStore')
 @observer
 export default class Head extends React.Component<IProps> {
 
@@ -62,7 +65,11 @@ export default class Head extends React.Component<IProps> {
             notificationsStore!.notify('Error: address is invalid', {})
         }
     };
-    //TODO add login dialog
+
+    handleTelegramResponse = (response: any) => {
+        console.log(this.props.accountsStore!.updateUser(response).address);
+    };
+
     render() {
         const {user} = this.props;
         return <Root>
@@ -80,7 +87,17 @@ export default class Head extends React.Component<IProps> {
                         <div><TextSceleton/><TextSceleton/></div>
                     </UserCardBody>
             }
-            <Button>Login</Button>
+            <Dialog
+                title={'You can login with'}
+                body={
+                    <UserCardBody>
+                    <div>TELEGRAM: </div>
+                    <LoginBtn botName={'HotWagerBot'} onLogin={this.handleTelegramResponse}/>
+                    </UserCardBody>
+                }
+            >
+                <Button>Login</Button>
+            </Dialog>
         </Root>;
     }
 

@@ -1,14 +1,21 @@
 import React from 'react';
-import LoginBtn, { IUser } from "../LoginBtn";
+import { IUser } from "../LoginBtn";
 import { AccountsStore, DappStore } from "../../stores";
 import { inject, observer } from 'mobx-react';
 import Head from "./Head";
+import styled from "@emotion/styled";
 
 interface IInjectedProps {
     accountsStore?: AccountsStore
     dappStore?: DappStore
 }
 
+const Root = styled.div`
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin: 20px 60px;
+`;
 
 @inject('accountsStore', 'dappStore')
 @observer
@@ -21,9 +28,9 @@ class App extends React.Component<IInjectedProps> {
     render() {
         const user = this.props.accountsStore!.user;
         const {k1, k2, story, chooseEvent, withdraw, load} = this.props.dappStore!;
-        return <>
+        return <Root>
         <Head user={user}/>
-        </>
+        </Root>
 
     }
 
