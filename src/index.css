@@ -4,4 +4,8 @@ body {
     /*overflow: hidden;*/
     padding: 0;
     margin: 0;
+    font-family: 'Major Mono Display', monospace;
+    color: #9192a2;
+    background-color: #221d1c;
+    font-size: 20px;
 }

@@ -7,6 +7,7 @@ import { loadState, saveState } from './utils';
 import { RootStore } from "./stores";
 import { autorun } from "mobx";
 import { Provider } from 'mobx-react';
+import 'rc-notification/assets/index.css';
 
 // Store init
 const initState = loadState();
