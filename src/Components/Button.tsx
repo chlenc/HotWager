@@ -11,9 +11,15 @@ width: 200px;
 height: 40px;
 font-family: 'Major Mono Display', monospace;
 font-size: 20px;
+text-transform: uppercase;
 :hover{
 background-color: #9192a2;
 color: #343d3f;
+}
+:disabled{
+background-color: #343d3f;
+border-color: #343d3f;
+cursor: not-allowed;
 }
 `;
 

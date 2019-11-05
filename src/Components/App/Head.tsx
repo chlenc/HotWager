@@ -8,6 +8,7 @@ import copyToClipboard from 'copy-to-clipboard'
 import {inject, observer} from "mobx-react";
 import {AccountsStore, NotificationsStore} from "../../stores";
 import Dialog from "../Dialog";
+import Avatar from "./Avatar";
 
 interface IProps {
     user: IUser | null
@@ -31,12 +32,12 @@ user-select: none;
 margin-right: 15px;
 `;
 
-const Avatar = styled.img`
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  margin-right: 8px;
-`
+// const Avatar = styled.img`
+//   border-radius: 50%;
+//   width: 40px;
+//   height: 40px;
+//   margin-right: 8px;
+// `
 
 const AvatarSceleton = styled.div`
   border-radius: 50%;
@@ -74,9 +75,9 @@ export default class Head extends React.Component<IProps> {
         const {user} = this.props;
         return <Root>
             {
-                user
+                user && user.address
                     ? <UserCardBody onClick={this.handleCopyAddress}>
-                        <Avatar alt="Telegram photo" src={user.photo_url}/>
+                        <Avatar address={user.address}/>
                         <div>
                             <div css={css`:hover{color: #595565}`}>{user.address}</div>
                             <div>balance:&nbsp;{user.balance}&nbsp;waves</div>

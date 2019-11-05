@@ -54,7 +54,12 @@ export class DappStore extends SubStore {
     }
 
 
-    chooseEvent = async (value: number, seed: string) => {
+    chooseEvent = async (value: number) => {
+        if(!this.rootStore.accountsStore.user || !this.rootStore.accountsStore.user.seed){
+            this.rootStore.notificationsStore.notify('invalid seed');
+            return ;
+        }
+        const {seed} = this.rootStore.accountsStore.user;
         this.load = true;
         const params: IInvokeScriptParams = {
             dApp,

@@ -1,9 +1,20 @@
 import React from 'react';
-import { IUser } from "../LoginBtn";
-import { AccountsStore, DappStore } from "../../stores";
-import { inject, observer } from 'mobx-react';
+import {AccountsStore, DappStore} from "../../stores";
+import {inject, observer} from 'mobx-react';
 import Head from "./Head";
 import styled from "@emotion/styled";
+import Button from "../Button";
+// import 'rc-table/assets/index.css'
+
+import Table from 'rc-table';
+
+const columns = [
+    {title: 'Index', dataIndex: 'i', key: 'i', width: 100,},
+    {title: 'Coef1', dataIndex: 'k1', key: 'k1', width: 100, render: (v: number) => v/100},
+    {title: 'Coef2', dataIndex: 'k2', key: 'k2', width: 100, render: (v: number) => v/100},
+    {title: 'Choose', dataIndex: 'e', key: 'e',width: 100,},
+];
+
 
 interface IInjectedProps {
     accountsStore?: AccountsStore
@@ -11,25 +22,40 @@ interface IInjectedProps {
 }
 
 const Root = styled.div`
+height: calc(100vh - 80px);
 display: flex;
 align-items: center;
+flex-direction: column;
 justify-content: space-between;
 margin: 20px 60px;
 `;
+
+const EventLayout = styled.div`
+display: flex;
+
+ flex-direction: column;
+ > * {
+  margin: 14px;
+ }
+`
+
+const Footer = styled.div``;
 
 @inject('accountsStore', 'dappStore')
 @observer
 class App extends React.Component<IInjectedProps> {
 
-    handleTelegramResponse = (response: any) => {
-        console.log(this.props.accountsStore!.updateUser(response).address);
-    };
-
     render() {
         const user = this.props.accountsStore!.user;
         const {k1, k2, story, chooseEvent, withdraw, load} = this.props.dappStore!;
         return <Root>
-        <Head user={user}/>
+            <Head user={user}/>
+            <EventLayout>
+                <EventCard title="Event 1" chooseEvent={chooseEvent} event={1} k={k1} load={load}/>
+                <EventCard title="Event 2" chooseEvent={chooseEvent} event={2} k={k2} load={load}/>
+            </EventLayout>
+            {story && <Table columns={columns} data={story} />}
+            <Footer>HotWager©</Footer>
         </Root>
 
     }
@@ -38,18 +64,34 @@ class App extends React.Component<IInjectedProps> {
 
 interface IEventCardProps {
     title: string,
+    event: number,
     k: number | null,
-    user: IUser | null,
-    chooseEvent: (n: number, s: string) => void
+    chooseEvent: (n: number) => void
     load: boolean
 }
+
+const EventItem = styled.div`
+padding: 20px;
+border: solid 4px #9192a2;
+display: flex;
+flex-direction: column;
+ > * {
+  margin-bottom: 14px;
+ }
+`;
 
 class EventCard extends React.Component<IEventCardProps> {
 
     render() {
-        const {title, k, user, chooseEvent, load} = this.props;
-        return null
+        const {title, k, chooseEvent, load, event} = this.props;
+        return <EventItem>
+            <div><b>{title}</b>&nbsp;k{k}</div>
+            <Button disabled={load} onClick={() => chooseEvent(event)}>Bet {title}</Button>
+        </EventItem>;
     }
 }
+
+
+
 
 export default App;
