@@ -1,1 +1,0 @@
-{"version":3,"sources":["index.css"],"names":[],"mappings":"AAAA,UAEI,WAAY,CAEZ,SAAU,CACV,QACJ","file":"main.48558b17.chunk.css","sourcesContent":["html,\r\nbody {\r\n    height: 100%;\r\n    /*overflow: hidden;*/\r\n    padding: 0;\r\n    margin: 0;\r\n}\r\n"]}
