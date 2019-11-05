@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "b1f0ba066b2144a0f32864dd1cf9b1b2",
+    "revision": "c2e483b47da63b804a5d42bc952f11d0",
     "url": "/hotwager/index.html"
   },
   {
-    "revision": "6f090206aaa655f6f324",
+    "revision": "3a81883a0711e78d9e4b",
     "url": "/hotwager/static/css/2.b46466a8.chunk.css"
   },
   {
-    "revision": "f09a1ead294235b1c318",
+    "revision": "175437654e0c8c773dec",
     "url": "/hotwager/static/css/main.62254fd3.chunk.css"
   },
   {
-    "revision": "6f090206aaa655f6f324",
-    "url": "/hotwager/static/js/2.6ee2d35f.chunk.js"
+    "revision": "3a81883a0711e78d9e4b",
+    "url": "/hotwager/static/js/2.1ea3f0e9.chunk.js"
   },
   {
-    "revision": "f09a1ead294235b1c318",
-    "url": "/hotwager/static/js/main.67be3226.chunk.js"
+    "revision": "175437654e0c8c773dec",
+    "url": "/hotwager/static/js/main.5c9a34c2.chunk.js"
   },
   {
     "revision": "91cefd052bbfdefa8968",
