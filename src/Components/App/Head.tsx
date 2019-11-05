@@ -75,18 +75,18 @@ export default class Head extends React.Component<IProps> {
         const {user} = this.props;
         return <Root>
             {
-                user && user.address
-                    ? <UserCardBody onClick={this.handleCopyAddress}>
+                user && user.address &&
+                    <UserCardBody onClick={this.handleCopyAddress}>
                         <Avatar address={user.address}/>
                         <div>
                             <div css={css`:hover{color: #595565}`}>{user.address}</div>
                             <div>balance:&nbsp;{user.balance}&nbsp;waves</div>
                         </div>
                     </UserCardBody>
-                    : <UserCardBody>
-                        <AvatarSceleton/>
-                        <div><TextSceleton/><TextSceleton/></div>
-                    </UserCardBody>
+                    // : <UserCardBody>
+                    //     <AvatarSceleton/>
+                    //     <div><TextSceleton/><TextSceleton/></div>
+                    // </UserCardBody>
             }
             <Dialog
                 title={'You can login with'}
