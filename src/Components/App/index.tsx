@@ -52,8 +52,8 @@ class App extends React.Component<IInjectedProps> {
             </Grid>
             <Grid item xs={6} >
                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                    <EventCard title={'Event 1'} k={k1} user={user} chooseEvent={chooseEvent} load={load}/>
-                    <EventCard title={'Event 2'} k={k2} user={user} chooseEvent={chooseEvent} load={load}/>
+                    <EventCard title={'Event 1'} k={k1/100} user={user} chooseEvent={chooseEvent} load={load}/>
+                    <EventCard title={'Event 2'} k={k2/100} user={user} chooseEvent={chooseEvent} load={load}/>
                 </div>
                 <div style={{display: 'flex', marginTop: '50px', justifyContent: "center"}}>
                     <Button
