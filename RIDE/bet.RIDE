@@ -14,7 +14,7 @@ func coef(q: Int,dif:Int) = {
 }
 
 #возвращает другой коэффициент, домноженный на 10
-func anothercoef(q: Int,dif: Int) ={
+func anothercoef(q: Int,dif:Int) ={
     let actualvig =  (vig* (-95 * dif * dif+ 1877 * dif + 10000))/10000
     let anothercoef =  pow(actualvig+1000-100000/q,0,-1,0,5,DOWN)
     if (anothercoef > 270) then (270)
@@ -25,7 +25,7 @@ func anothercoef(q: Int,dif: Int) ={
 func bet(event: Int) ={
     let payment = match(contextObj.payment) {
         case p:AttachedPayment => if ( p.amount < 100000000) then (throw("low payment")) else p
-        case _ => throw("Payment not attached")
+        case _ => throw("Paymx`ent not attached")
     }
 
     let n = getIntegerValue(this,"n") #amount bets on the first event
@@ -42,13 +42,25 @@ func bet(event: Int) ={
         case u:Unit => 0
         case i:Int => i
     }
+    let kostylForCoef1 = match(getInteger(this,"q1_next")){
+        case u:Unit => 0
+        case i:Int => i
+    }
+
+    let kostylforcoef2 = match(getInteger(this,"q2_next")){
+        case u:Unit => 0
+        case i:Int => i
+    }
 
     let dif = if(event == 1) then(difold+1) else(difold-1)
-    let q1 = if(dif>=0) then(coef(q1start,dif)) else(anothercoef(coef(q2start,dif),dif))
+
+    let q1 = if(dif>=0) then(coef(q1start,dif)) else (anothercoef(coef(q2start,dif),dif))
     let q2 = if(dif>=0) then(anothercoef(coef(q1start,dif),dif)) else(coef(q2start,dif))
     let q1next = if(dif+1>=0) then(coef(q1start,dif+1)) else(anothercoef(coef(q2start,dif+1),dif+1))
     let q2next  = if(dif-1>=0) then(anothercoef(coef(q1start,dif-1),dif-1)) else(coef(q2start,dif-1))
     let countNew = count + 1  
+
+
         if (event == 1) then(
         if (q1 < 100) then throw("to low coef q1 = " + toString(q1))
         else(
@@ -57,7 +69,7 @@ func bet(event: Int) ={
             DataEntry(toString(contextObj.caller) + "_event1amount",event1amount+q1),
             DataEntry(toString(countNew)+"_event",event),
             DataEntry(toString(countNew)+"_qoef1", q1),
-            DataEntry(toString(countNew)+"_qoef2", q2),
+            DataEntry(toString(countNew)+"_qoef2", kostylforcoef2),
             DataEntry(toString(countNew)+"_bettor", toString(contextObj.caller)),
             DataEntry("q1_next", q1next),
             DataEntry("q2_next", q2next),
@@ -72,11 +84,11 @@ func bet(event: Int) ={
             WriteSet([
             DataEntry(toString(contextObj.caller) + "_event2amount",event2amount+q2),
             DataEntry(toString(countNew)+"_event",event),
+            DataEntry(toString(countNew)+"_qoef1", kostylForCoef1),
             DataEntry(toString(countNew)+"_qoef2", q2),
             DataEntry(toString(countNew)+"_bettor", toString(contextObj.caller)),
             DataEntry("q1_next", q1next),
             DataEntry("q2_next", q2next),
-            DataEntry(toString(countNew)+"_qoef1", coef(q1start,n-m)),
             DataEntry("m", mNew),
             DataEntry("count", countNew)
             ])
@@ -98,7 +110,7 @@ func withdraw() =   {
     }
     
     let event1 = match(getBoolean(this,"result_event_1")){
-        case u:Unit => false
+        case u:Unit => falsecd 
         case b:Boolean=> b
     }
 
@@ -106,9 +118,7 @@ func withdraw() =   {
         case u:Unit => false
         case b:Boolean=>b
     }
-
-
-    if (event1)
+if (event1)
      then (
          ScriptResult(
                 WriteSet([DataEntry(toString(contextObj.caller) + "_event1amount", 0)]),
@@ -124,9 +134,7 @@ func withdraw() =   {
     )
     else throw("event did not happen or you have zero win")
     )
-}
-
-    
+} 
 
 #
 #@Verifier(contextObj)
