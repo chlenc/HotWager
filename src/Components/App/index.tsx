@@ -55,8 +55,8 @@ class App extends React.Component<IInjectedProps> {
         return <Root>
             <Head user={user}/>
             <EventLayout>
-                <EventCard title="Event 1" chooseEvent={chooseEvent} event={1} k={k1} load={load} descr={event1amount}/>
-                <EventCard title="Event 2" chooseEvent={chooseEvent} event={2} k={k2} load={load} descr={event2amount}/>
+                <EventCard title="Event I" chooseEvent={chooseEvent} event={1} k={k1} load={load} descr={event1amount}/>
+                <EventCard title="Event II" chooseEvent={chooseEvent} event={2} k={k2} load={load} descr={event2amount}/>
             </EventLayout>
             {story && <Table columns={columns} data={story} />}
             <Footer>HotWager©</Footer>
