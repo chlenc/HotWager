@@ -12,6 +12,8 @@ export class DappStore extends SubStore {
 
     @observable k1: number | null = null;
     @observable k2: number | null = null;
+    @observable event1amount: number | null = null;
+    @observable event2amount: number | null = null;
     @observable count1: number | null = null;
     @observable count2: number | null = null;
     @observable story: TStoryItem[] | null = null;
@@ -41,6 +43,8 @@ export class DappStore extends SubStore {
         this.k2 = state.q2_next;
         this.count1 = state.n;
         this.count2 = state.m;
+        this.event1amount = state[`${address}_event1amount`];
+        this.event2amount = state[`${address}_event2amount`];
 
         this.story = Object.entries(state)
             .filter(([_, val]) => val === address)

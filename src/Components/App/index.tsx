@@ -7,12 +7,16 @@ import Button from "../Button";
 // import 'rc-table/assets/index.css'
 
 import Table from 'rc-table';
+import {TStoryItem} from "../../stores/DappStore";
+
+const Border = styled.div`border-bottom: 1px solid`;
 
 const columns = [
     {title: 'Index', dataIndex: 'i', key: 'i', width: 100,},
-    {title: 'Coef1', dataIndex: 'k1', key: 'k1', width: 100, render: (v: number) => v/100},
-    {title: 'Coef2', dataIndex: 'k2', key: 'k2', width: 100, render: (v: number) => v/100},
-    {title: 'Choose', dataIndex: 'e', key: 'e',width: 100,},
+    {title: 'Coef1', dataIndex: 'k1', key: 'k1', width: 100, render: (v: number, {e}: TStoryItem) =>
+            e === 1 ? <Border>{v/100}</Border> : v/100},
+    {title: 'Coef2', dataIndex: 'k2', key: 'k2', width: 100, render: (v: number, {e}: TStoryItem) =>
+            e === 2 ? <Border>{v/100}</Border> : v/100},
 ];
 
 
@@ -47,12 +51,12 @@ class App extends React.Component<IInjectedProps> {
 
     render() {
         const user = this.props.accountsStore!.user;
-        const {k1, k2, story, chooseEvent, withdraw, load} = this.props.dappStore!;
+        const {k1, k2, story, chooseEvent, load, event1amount, event2amount} = this.props.dappStore!;
         return <Root>
             <Head user={user}/>
             <EventLayout>
-                <EventCard title="Event 1" chooseEvent={chooseEvent} event={1} k={k1} load={load}/>
-                <EventCard title="Event 2" chooseEvent={chooseEvent} event={2} k={k2} load={load}/>
+                <EventCard title="Event 1" chooseEvent={chooseEvent} event={1} k={k1} load={load} descr={event1amount}/>
+                <EventCard title="Event 2" chooseEvent={chooseEvent} event={2} k={k2} load={load} descr={event2amount}/>
             </EventLayout>
             {story && <Table columns={columns} data={story} />}
             <Footer>HotWager©</Footer>
@@ -68,6 +72,7 @@ interface IEventCardProps {
     k: number | null,
     chooseEvent: (n: number) => void
     load: boolean
+    descr: number | null
 }
 
 const EventItem = styled.div`
@@ -83,10 +88,11 @@ flex-direction: column;
 class EventCard extends React.Component<IEventCardProps> {
 
     render() {
-        const {title, k, chooseEvent, load, event} = this.props;
+        const {title, k, chooseEvent, load, event, descr} = this.props;
         return <EventItem>
-            <div><b>{title}</b>&nbsp;k{k}</div>
+            <div><b>{title}</b>&nbsp;k{k && k/100}</div>
             <Button disabled={load} onClick={() => chooseEvent(event)}>Bet {title}</Button>
+            {descr && <div>I win {descr/100}</div>}
         </EventItem>;
     }
 }
