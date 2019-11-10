@@ -92,7 +92,7 @@ class EventCard extends React.Component<IEventCardProps> {
         return <EventItem>
             <div><b>{title}</b>&nbsp;k{k && k/100}</div>
             <Button disabled={load} onClick={() => chooseEvent(event)}>Bet</Button>
-            {descr && <div>I win {descr/100}</div>}
+            {descr && <div>{title} win {descr/100}</div>}
         </EventItem>;
     }
 }
