@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/hotwager/static/css/main.62254fd3.chunk.css",
-    "main.js": "/hotwager/static/js/main.d0b49d6c.chunk.js",
-    "main.js.map": "/hotwager/static/js/main.d0b49d6c.chunk.js.map",
+    "main.js": "/hotwager/static/js/main.2e4827f7.chunk.js",
+    "main.js.map": "/hotwager/static/js/main.2e4827f7.chunk.js.map",
     "runtime-main.js": "/hotwager/static/js/runtime-main.81ff9750.js",
     "runtime-main.js.map": "/hotwager/static/js/runtime-main.81ff9750.js.map",
     "static/css/2.b46466a8.chunk.css": "/hotwager/static/css/2.b46466a8.chunk.css",
-    "static/js/2.87d2ae71.chunk.js": "/hotwager/static/js/2.87d2ae71.chunk.js",
-    "static/js/2.87d2ae71.chunk.js.map": "/hotwager/static/js/2.87d2ae71.chunk.js.map",
+    "static/js/2.0fe0c973.chunk.js": "/hotwager/static/js/2.0fe0c973.chunk.js",
+    "static/js/2.0fe0c973.chunk.js.map": "/hotwager/static/js/2.0fe0c973.chunk.js.map",
     "index.html": "/hotwager/index.html",
-    "precache-manifest.14753467c089f7d2d46010f8cfe8eec6.js": "/hotwager/precache-manifest.14753467c089f7d2d46010f8cfe8eec6.js",
+    "precache-manifest.99751e8ce47b9c55a1d0c390d96fc5b3.js": "/hotwager/precache-manifest.99751e8ce47b9c55a1d0c390d96fc5b3.js",
     "service-worker.js": "/hotwager/service-worker.js",
     "static/css/2.b46466a8.chunk.css.map": "/hotwager/static/css/2.b46466a8.chunk.css.map",
     "static/css/main.62254fd3.chunk.css.map": "/hotwager/static/css/main.62254fd3.chunk.css.map"
@@ -17,8 +17,8 @@
   "entrypoints": [
     "static/js/runtime-main.81ff9750.js",
     "static/css/2.b46466a8.chunk.css",
-    "static/js/2.87d2ae71.chunk.js",
+    "static/js/2.0fe0c973.chunk.js",
     "static/css/main.62254fd3.chunk.css",
-    "static/js/main.d0b49d6c.chunk.js"
+    "static/js/main.2e4827f7.chunk.js"
   ]
 }
