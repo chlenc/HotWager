@@ -32,26 +32,6 @@ user-select: none;
 margin-right: 15px;
 `;
 
-// const Avatar = styled.img`
-//   border-radius: 50%;
-//   width: 40px;
-//   height: 40px;
-//   margin-right: 8px;
-// `
-
-const AvatarSceleton = styled.div`
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  background-color: darkgray;
-`
-
-const TextSceleton = styled.div`
-  border-radius: 50%;
-  width: 150px;
-  height: 40px;
-  background-color: darkgray;
-`
 
 @inject('notificationsStore', 'accountsStore')
 @observer
@@ -83,10 +63,6 @@ export default class Head extends React.Component<IProps> {
                             <div>balance:&nbsp;{user.balance}&nbsp;waves</div>
                         </div>
                     </UserCardBody>
-                    // : <UserCardBody>
-                    //     <AvatarSceleton/>
-                    //     <div><TextSceleton/><TextSceleton/></div>
-                    // </UserCardBody>
             }
             <Dialog
                 title={'You can login with'}

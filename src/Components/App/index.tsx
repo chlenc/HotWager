@@ -13,10 +13,14 @@ const Border = styled.div`border-bottom: 1px solid`;
 
 const columns = [
     {title: 'Index', dataIndex: 'i', key: 'i', width: 100,},
-    {title: 'Coef1', dataIndex: 'k1', key: 'k1', width: 100, render: (v: number, {e}: TStoryItem) =>
-            e === 1 ? <Border>{v/100}</Border> : v/100},
-    {title: 'Coef2', dataIndex: 'k2', key: 'k2', width: 100, render: (v: number, {e}: TStoryItem) =>
-            e === 2 ? <Border>{v/100}</Border> : v/100},
+    {
+        title: 'Coef1', dataIndex: 'k1', key: 'k1', width: 100, render: (v: number, {e}: TStoryItem) =>
+            e === 1 ? <Border>{v / 100}</Border> : v / 100
+    },
+    {
+        title: 'Coef2', dataIndex: 'k2', key: 'k2', width: 100, render: (v: number, {e}: TStoryItem) =>
+            e === 2 ? <Border>{v / 100}</Border> : v / 100
+    },
 ];
 
 
@@ -51,14 +55,13 @@ class App extends React.Component<IInjectedProps> {
 
     render() {
         const user = this.props.accountsStore!.user;
-        const {k1, k2, story, chooseEvent, load, event1amount, event2amount} = this.props.dappStore!;
+        const {k1, k2, story, chooseEvent, load, event1amount, event2amount, withdraw} = this.props.dappStore!;
         return <Root>
             <Head user={user}/>
-            <EventLayout>
-                <EventCard title="Event I" chooseEvent={chooseEvent} event={1} k={k1} load={load} descr={event1amount}/>
-                <EventCard title="Event II" chooseEvent={chooseEvent} event={2} k={k2} load={load} descr={event2amount}/>
-            </EventLayout>
-            {story && <Table columns={columns} data={story} />}
+            <EventCard title="Event I" chooseEvent={chooseEvent} event={1} k={k1} load={load} descr={event1amount}/>
+            <EventCard title="Event II" chooseEvent={chooseEvent} event={2} k={k2} load={load} descr={event2amount}/>
+            <Button disabled={load} onClick={withdraw}>withdraw</Button>
+            {story && <Table columns={columns} data={story}/>}
             <Footer>HotWager©</Footer>
         </Root>
 
@@ -76,6 +79,8 @@ interface IEventCardProps {
 }
 
 const EventItem = styled.div`
+min-height: 100px;
+min-width: 300px;
 padding: 20px;
 border: solid 4px #9192a2;
 display: flex;
@@ -90,14 +95,12 @@ class EventCard extends React.Component<IEventCardProps> {
     render() {
         const {title, k, chooseEvent, load, event, descr} = this.props;
         return <EventItem>
-            <div><b>{title}</b>&nbsp;k{k && k/100}</div>
+            <div><b>{title}</b>&nbsp;k{k && k / 100}</div>
             <Button disabled={load} onClick={() => chooseEvent(event)}>Bet</Button>
-            {descr && <div>{title} win {descr/100}</div>}
+            {descr && <div>{title} win {descr / 100}</div>}
         </EventItem>;
     }
 }
-
-
 
 
 export default App;
