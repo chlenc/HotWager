@@ -1,9 +1,9 @@
 import React from 'react';
 
 export interface IUser {
-    auth_date: number
-    hash: string
-    id: number
+    auth_date?: number
+    hash?: string
+    id?: number
     first_name?: string
     last_name?: string
     balance?: number

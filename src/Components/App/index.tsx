@@ -1,13 +1,12 @@
 import React from 'react';
-import {AccountsStore, DappStore} from "../../stores";
-import {inject, observer} from 'mobx-react';
+import { AccountsStore, DappStore } from "../../stores";
+import { inject, observer } from 'mobx-react';
 import Head from "./Head";
 import styled from "@emotion/styled";
 import Button from "../Button";
-// import 'rc-table/assets/index.css'
-
 import Table from 'rc-table';
-import {TStoryItem} from "../../stores/DappStore";
+import { TStoryItem } from "../../stores/DappStore";
+// import 'rc-table/assets/index.css'
 
 const Border = styled.div`border-bottom: 1px solid`;
 
@@ -36,6 +35,10 @@ align-items: center;
 flex-direction: column;
 justify-content: space-between;
 margin: 20px 60px;
+
+& > * {
+margin-bottom: 40px;
+}
 `;
 
 const EventLayout = styled.div`
