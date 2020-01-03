@@ -1,10 +1,10 @@
 import RootStore from './RootStore';
 import SubStore from './SubStore';
-import { action, autorun, observable } from "mobx";
+import {action, autorun, observable} from "mobx";
 import axios from "axios";
-import { dApp, nodeUrl } from "../constants";
-import { IInvokeScriptParams } from "@waves/waves-transactions/src/transactions";
-import { broadcast, invokeScript } from "@waves/waves-transactions";
+import {dApp, nodeUrl} from "../constants";
+import {IInvokeScriptParams} from "@waves/waves-transactions/src/transactions";
+import {broadcast, invokeScript, waitForTx} from "@waves/waves-transactions";
 
 export type TStoryItem = { e: number, k1: number, k2: number, i: number }
 
@@ -12,6 +12,8 @@ export class DappStore extends SubStore {
 
     @observable k1: number | null = null;
     @observable k2: number | null = null;
+    @observable event1amount: number | null = null;
+    @observable event2amount: number | null = null;
     @observable count1: number | null = null;
     @observable count2: number | null = null;
     @observable story: TStoryItem[] | null = null;
@@ -41,6 +43,8 @@ export class DappStore extends SubStore {
         this.k2 = state.q2_next;
         this.count1 = state.n;
         this.count2 = state.m;
+        this.event1amount = state[`${address}_event1amount`];
+        this.event2amount = state[`${address}_event2amount`];
 
         this.story = Object.entries(state)
             .filter(([_, val]) => val === address)
@@ -54,7 +58,12 @@ export class DappStore extends SubStore {
     }
 
 
-    chooseEvent = async (value: number, seed: string) => {
+    chooseEvent = async (value: number) => {
+        if (!this.rootStore.accountsStore.user || !this.rootStore.accountsStore.user.seed) {
+            this.rootStore.notificationsStore.notify('invalid seed');
+            return;
+        }
+        const {seed} = this.rootStore.accountsStore.user;
         this.load = true;
         const params: IInvokeScriptParams = {
             dApp,
@@ -64,11 +73,19 @@ export class DappStore extends SubStore {
             chainId: 'T'
         };
         const tx = invokeScript(params, seed);
-        await broadcast(tx, nodeUrl).then(d => console.log(d.id)).catch(e => alert(e)).then(() => this.load = false)
+        broadcast(tx, nodeUrl).then(d => console.log(d.id)).catch(e => alert(e))
+        waitForTx(tx.id, {apiBase: 'https://nodes-testnet.wavesnodes.com'}).then((res) => {
+            this.load = false
+        })
     }
 
 
-    withdraw = async (seed: string) => {
+    withdraw = async () => {
+        if (!this.rootStore.accountsStore.user || !this.rootStore.accountsStore.user.seed) {
+            this.rootStore.notificationsStore.notify('invalid seed')
+            return
+        }
+
         const params: IInvokeScriptParams = {
             dApp,
             feeAssetId: null,
@@ -76,8 +93,11 @@ export class DappStore extends SubStore {
             payment: [],
             chainId: 'T'
         };
-        const tx = invokeScript(params, seed);
-        broadcast(tx, nodeUrl).then(d => console.log(d.id)).catch(e => alert(e)).then(() => this.load = false)
+        const tx = invokeScript(params, this.rootStore.accountsStore.user.seed);
+        broadcast(tx, nodeUrl).then(d => console.log(d.id)).catch(e => alert(e));
+        waitForTx(tx.id, {apiBase: 'https://nodes-testnet.wavesnodes.com'}).then((res) => {
+            this.load = false
+        })
     }
 
 

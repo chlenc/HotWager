@@ -64,6 +64,9 @@ declare module '*.sass' {
 }
 
 declare module 'react-telegram-login'
+declare module 'rc-notification'
+declare module 'rc-dialog'
+declare module 'rc-table'
 
 declare interface Window {
   TelegramLoginWidget: any;

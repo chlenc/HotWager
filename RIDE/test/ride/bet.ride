@@ -7,30 +7,29 @@ let q2start = 190 #two number after digit
 let vig = 52 #two number after digit
 let riskAmount = 1000 #sum in waves which we can lost
 let betThreshold = 10
-let betMin = 1
+let betMin = 2
 let betMax = 100
 
 #this functions for extracting all variables
 func q1Extract() = {
-    let q1 = if isDefined("q1_next") then this.getIntegerValue("q1_next") else q1start
+    let q1 = if this.getInteger("q1_next").isDefined() then q1start else q1start #change this.getIntegerValue("q1_next")
     q1
 }
 
 func q2Extract() = {
-    let q2 = if isDefined("q2_next") then this.getIntegerValue("q2_next") else q2start
+    let q2 = if this.getInteger("q2_next").isDefined() then q2start else q2start # this.getIntegerValue("q2_next")
     q2
 }
 
 func debtAmount1Extract() = {
-    let debtAmount1 = if isDefined("debtAmount1") then this.getIntegerValue("debtAmount1") else 0
+    let debtAmount1 = if this.getInteger("debtAmount1").isDefined() then this.getIntegerValue("debtAmount1") else 0
     debtAmount1
 }
 
 func debtAmount2Extract() = {
-    let debtAmount2 = if isDefined("debtAmount2") then this.getIntegerValue("debtAmount2") else 0
+    let debtAmount2 = if this.getInteger("debtAmount2").isDefined() then this.getIntegerValue("debtAmount2") else 0
     debtAmount2
 }
-
 
 # coef updating functions
 func calcCoefIfBigBet( event: String,betAmount: Int) = {
@@ -74,10 +73,19 @@ func bet(event: Int) ={
     let betAmount = match(contextObj.payment) {
         case p:AttachedPayment => if ( p.amount < betMin) then (throw("low payment")) else p.amount
         case _ => throw("Payment not attached")
-    }
-    let count = if isDefined("count") then this.getIntegerValue("count") else 0 #count of bets
-    let event1DebtForThisPlayer = this.getIntegerValue(toString(contextObj.caller) + "_event1DebtForThisPlayer")
-    let event2DebtForThisPlayer = this.getIntegerValue(toString(contextObj.caller) + "_event2DebtForThisPlayer")
+    }    
+    
+    
+    let count = if this.getInteger("count").isDefined() then this.getIntegerValue("count") else 0 #count of bets
+  
+    let event1DebtForThisPlayer = if this.getInteger(toString(contextObj.caller) + "_event1DebtForThisPlayer").isDefined() then 
+        this.getIntegerValue(toString(contextObj.caller) + "_event1DebtForThisPlayer") else 0
+    
+    let event2DebtForThisPlayer = if this.getInteger(toString(contextObj.caller) + "_event2DebtForThisPlayer").isDefined() then 
+        this.getIntegerValue(toString(contextObj.caller) + "_event2DebtForThisPlayer") else 0
+
+    #if true then throw( toString(event2DebtForThisPlayer))
+    #      else
     let debtAmount1 = debtAmount1Extract()
     let debtAmount2 = debtAmount2Extract()
     let q1 = q1Extract()
@@ -85,7 +93,7 @@ func bet(event: Int) ={
     let countNew = count + 1 
 
     if (event == 1) then(
-        if betAmount < betThreshold then{
+        if betAmount <= betThreshold then{
             let event1DebtForThisPlayerNew = event1DebtForThisPlayer + q1*betAmount
             let debtAmount1New = debtAmount1 - q1*betAmount
             let debtAmount2New = debtAmount2 + betAmount
@@ -125,7 +133,7 @@ func bet(event: Int) ={
         else throw("incorrect bet amount")     
     )
     else (
-        if betAmount < betThreshold then
+        if betAmount <= betThreshold then
             let event2DebtForThisPlayerNew = event2DebtForThisPlayer + q2*betAmount
             let debtAmount2New = debtAmount2 - q2*betAmount
             let debtAmount1New = debtAmount1 + betAmount

@@ -22,6 +22,16 @@ export class AccountsStore extends SubStore {
         return this.user
     }
 
+    // @action
+    // public updateUserWithSeed(seed: string) {
+    //     if (!this.user || this.user.seed !== seed) {
+    //         const address = buildAddress(seed, 'T');
+    //         //todo show notification
+    //         this.user = {seed, address};
+    //     }
+    //     return this.user
+    // }
+
     @action
     async updateBalance() {
         if (this.user && this.user.address) {
