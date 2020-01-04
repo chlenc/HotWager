@@ -67,6 +67,7 @@ class COEFS():
             k = (1 - self.q_1_start)/(self.riskAmount)
             b = 1 - k*self.riskAmount
             self.q_1 = -k*self.debtAmount1+b
+            a = -b/k/self.debtAmount1
             self.q_2 = self.anotherCoef(self.q_1)
             #print(b,debt1_new,self.q_1,self.q_2)
         elif self.debtAmount2 < 0:
